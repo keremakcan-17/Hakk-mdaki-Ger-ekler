@@ -1,0 +1,64 @@
+import discord
+
+# ayricaliklar (intents) değişkeni botun ayrıcalıklarını depolayacak
+intents = discord.Intents.default()
+# Mesajları okuma ayrıcalığını etkinleştirelim
+intents.message_content = True
+# client (istemci) değişkeniyle bir bot oluşturalım ve ayrıcalıkları ona aktaralım
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'{client.user} olarak giriş yaptık.')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    
+    if message.content.startswith('$merhaba'):
+        await message.channel.send("Selam!")
+
+    elif message.content.startswith('$resim gönder'):
+        with open("resimler/images.jpg","rb") as f:
+            resim = discord.File(f)
+        await message.channel.send(file = resim)
+
+    elif message.content.startswith('$resim2 gönder'):
+        with open("resimler/arkaplan-3.png","rb") as f2:
+            resim = discord.File(f2)
+        await message.channel.send(file2 = resim)
+
+    elif message.content.startswith('$resim3 gönder'):
+        with open("resimler/arkaplan-2(1).png","rb") as f3:
+            resim = discord.File(f3)
+        await message.channel.send(file3 = resim)
+
+    elif message.content.startswith('$bye'):
+        await message.channel.send("\U0001f642")
+
+    elif message.content.startswith("$nasılsın"):
+        await message.channel.send("İyiyim teşekür ederim.")
+
+    elif message.content.startswith("$Biraz sohbet etmeye var mısın?"):
+        await message.channel.send("Tabi ki de varım! Ne hakkında konuşmak istersin?")
+
+    elif message.content.startswith("$Bana kendini tanıtır mısın?"):
+        await message.channel.send("Merhaba, ben senin discord botunum ve seninle sohbet etmek için buradayım. Seninle sohbet etmeyi ve eğelenmek için her zaman hazırım!!! Bana bazı ülkeleri sorabilirsin.")
+    
+    elif message.content.startswith("$Türkiye neresidir?"):
+        await message.channel.send("Resmi adıyla Türkiye Cumhuriyeti, topraklarının büyük bölümü Anadolu'da, diğer bir bölümü ise Balkan Yarımadası'nın güneydoğu uzantısı Trakya'da olan kıtalararası bir ülkedir.")
+    
+    elif message.content.startswith("$Polonya neresidir?"):
+        await message.channel.send("Resmî adıyla Polonya Cumhuriyeti, Orta Avrupa'da bulunan bir ülkedir. Komşuları, batıda Almanya, güneybatıda Çekya, güneyde Slovakya, kuzeydoğuda Rusya ve Litvanya, doğuda Belarus, güneydoğuda Ukrayna ve kuzeyde Baltık Denizi'dir.")
+    
+    elif message.content.startswith("$Slovakya neresidir?"):
+        await message.channel.send("Resmî adıyla Slovak Cumhuriyeti, Orta Avrupa'da bir ülkedir. Eski Çekoslovakya'nın bir parçasıydı. Başkenti ve en büyük şehri Bratislava'dır.")
+    
+    elif message.content.startswith("$Çek Cumhuriyeti neresidir?"):
+        await message.channel.send("Resmî adıyla Çek Cumhuriyeti, Orta Avrupa'da bir ülkedir. Kuzeyinde Polonya, batı ve kuzeybatısında Almanya, güneyinde Avusturya ve doğusunda Slovakya ile komşudur. Tarihî Prag kenti, ülkenin başkenti ve en büyük kenti olmasının yanı sıra, çok ilgi çeken bir turizm merkezidir.")
+    
+    elif message.content.startswich("$Berlin neresidir?"):
+        await message.channel.send("Berlin, Almanya'nın başkenti ve en büyük şehridir, aynı zamanda bir eyalettir.")
+    else:
+        await message.channel.send(message.content)
