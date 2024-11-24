@@ -1,0 +1,46 @@
+import discord
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+@client.event
+async def on_ready():
+    print(f'{client.user} olarak giriş yaptık')
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('$Merhaba'):
+        await message.channel.send("Merhaba, ben bir bilmece botuyum. Bana birkaç bilmece sorabilirsin!!!")
+    
+    if message.content.startswith('$Su içilemeyen tas nedir?'):
+        await message.channel.send("Kafatası")
+
+    if message.content.startswith('$İnsanı en fazla hangi renk göz güldürür?'):
+        await message.channel.send("Karagöz")
+
+    if message.content.startswith('$Hiç kimsenin gitmek istemediği köy hangisidir?'):
+        await message.channel.send("Tahtalıköy")
+
+    if message.content.startswith('$Tuvaletteki 10’a ne denir?'):
+        await message.channel.send("SİFON")
+
+    if message.content.startswith('$Yemeğin suyuna kim bandı?'):
+        await message.channel.send("KOLİ BANDI")
+
+    if message.content.startswith('$Küçük su birikintisine ne denir?'):
+        await message.channel.send("SUCUK")
+
+    if message.content.startswith('$Hiç bozuk paran var mı?'):
+        await message.channel.send("YOK ÇÜNKÜ HEPSİNİ TAMİR ETTİRDİM")
+
+    if message.content.startswith('$Dört tarafı suyla çevrili çaya ne denir?'):
+        await message.channel.send("ADAÇAYI")
+
+    if message.content.startswith('$Kırmızı giyen erkeğe ne denir?'):
+        await message.channel.send("ALBAY") 
+
+    if message.content.startswith('$İngilizler kendi kıllarına ne der?'):
+        await message.channel.send("MICHEAL") 
+
+    if message.content.startswith('$En değerli meşe hangisidir?'):
+        await message.channel.send("ALTINMEŞE")
