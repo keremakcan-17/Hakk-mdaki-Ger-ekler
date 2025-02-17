@@ -1,0 +1,43 @@
+!pip install wordcloud
+from nltk.stem import WordNetLemmatizer
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.probability import FreqDist
+from wordcloud import WordCloud
+from matplotlib import pyplot as plt
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('punkt_tab')
+
+def ozetleme(metin):
+  sentences = sent_tokenize(metin, language='turkish')
+  stop_words = set(stopwords.words('turkish'))
+  words = word_tokenize(metin)
+  words = [word.lower() for word in words if word.isalpha()]
+  words = [word for word in words if word not in stop_words]
+  lemmatizer = WordNetLemmatizer()
+
+  words = [lemmatizer.lemmatize(word) for word in words]
+
+  freq_dist = FreqDist(words)
+  sentence_scores = {}
+
+  for i, sentence in enumerate(sentences):
+      sentence_words = word_tokenize(sentence.lower())
+      sentence_score = sum([freq_dist[word] for word in sentence_words if word in freq_dist])
+
+      sentence_scores[i] = sentence_score
+  sorted_scores = sorted(sentence_scores.items(), key=lambda x: x[1], reverse=True)
+  selected_sentences = sorted_scores[:1]
+  selected_sentences = sorted(selected_sentences)
+
+  # Özet oluşturma
+  summary = ' '.join([sentences[i] for i, _ in selected_sentences])
+  print(summary)
+
+
+metin = """Keçiler, dağlık ve açık alanlarda yaşamlarını sürdürebilmelerini sağlayan birçok özelliğe sahiptir. Bunlardan biri de göz bebeklerinin yatay ve dikdörtgen şeklinde olması.Keçilerin Göz Bebekleri Neden Dikdörtgen Şeklindedir?Keçilerin yatay ve dikdörtgen şeklindeki göz bebekleri, çevrelerini 270 derecelik geniş bir açıyla görmelerini sağlar. Bu sayede keçiler, başlarını çevirmeden çevrelerinde olup biteni neredeyse tamamen algılayabilir. Özellikle kolay av olabilen çift toynaklılarda görülen bu göz yapısı sayesinde hayvanlar, yukarıdan gelen bir yırtıcı kuşun tehdidini ya da zemindeki bir hareketi hemen fark eder. Böylece avcılara karşı daha hazırlıklı ve avantajlı bir konumda olurlar.Keçilerin göz bebekleri neden dikdörtgen.Keçilerin yatay ve dikdörtgen şeklindeki göz bebekleri, ortamdaki fazla ışığı süzerek net bir görüş sağlar ve kör edici yansımaları azaltır. Genellikle gündüz aktif olan keçiler gün boyunca parlak güneş ışığına maruz kalır. Göz bebeklerinin yatay şekli, özellikle açık alanlardaki ışık yansımalarını azaltarak hem yiyecek bulmalarını kolaylaştırır hem de olası tehlikeleri kolayca fark etmelerini mümkün kılar. .Keçilerin gözleriyle ilgili dikkat çekici bir diğer özellik ise başlarının eğimi hangi açıda olursa olsun göz bebeklerinin yatay konumlarını koruyabilmesidir. Çok dik bir yamaçta bile bu özellik sayesinde dengelerini koruyabilirler. Zorlu arazilerdeki bu hareket kabiliyetiyle keçilerin hayatta kalma şansları yükselir.Keçilerin göz bebekleri neden dikdörtgen?Keçilerin gözbebeklerinin dikdörtgen şekli, çevresel tehditlere karşı hazır olmalarını sağlarken yiyecek aramalarını da kolaylaştırır. Böylece sarp dağlık araziler gibi çok çetin ortamlarda hayatta kalmaları mümkün olur."""
+ozetleme(metin)
